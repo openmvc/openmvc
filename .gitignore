@@ -1,0 +1,5 @@
+#ignore all log files (refer to documentation for list of basic log files required for full monitoring)
+*.log
+
+#ignore config file (refer to documentation for sample one)
+config.ini.php

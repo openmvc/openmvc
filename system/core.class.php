@@ -79,18 +79,18 @@ class Core {
     private static function loadCore() {
         
         /*** Include Controller class ***/
-        include_once (SYSTEM_PATH . 'controller.class.php');
+        include_once (OPENMVC_SYSTEM_PATH . 'controller.class.php');
         
         /*** Load Router object ***/
-        include_once (SYSTEM_PATH . 'router.class.php');
+        include_once (OPENMVC_SYSTEM_PATH . 'router.class.php');
         Core::$_objects['Router'] = Router::obtain();
         
         /*** Load Template object ***/
-        include_once (SYSTEM_PATH . 'view.class.php');
+        include_once (OPENMVC_SYSTEM_PATH . 'view.class.php');
         Core::$_objects['View'] = View::obtain();
         
         /*** Load Config object ***/
-        include_once (SYSTEM_PATH . 'config.class.php');
+        include_once (OPENMVC_SYSTEM_PATH . 'config.class.php');
         Core::$_objects['Config'] = Config::obtain();
         
         /*** set timezone ***/

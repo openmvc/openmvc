@@ -10,21 +10,21 @@ define('DEV_MODE', 1);
 				define('WWW_CSS_PATH', '/css/');
 				define('WWW_JS_PATH', '/js/');
 				define('WWW_IMAGES_PATH', '/images/');
-				define('WWW_PATH', str_replace( 'index.php', '', $_SERVER['SCRIPT_NAME'])); //sets web path of MVC dir
 				
-				define('HTTP_HOST', 'http://' . $_SERVER['HTTP_HOST']);
 				define('STATIC_DIR', 'static_files/');
 				
-				/*** Set absolute Paths ***/
-				define('APP_PATH', dirname(dirname(__FILE__)) . WWW_PATH);
-				define('LOGS_PATH', APP_PATH . 'logs/');
-				define('SYSTEM_PATH', APP_PATH . 'system/');
-				define('LIB_PATH', APP_PATH . 'lib/');
-				define('VIEWS_PATH', APP_PATH . 'views/');
-				define('CONTROLLERS_PATH', APP_PATH . 'controllers/');
-				define('CONFIG_PATH', APP_PATH . 'config/');
+				/*** Set OpenMVC absolute Paths ***/
+				define('OPENMVC_PATH', dirname(__FILE__). '/');
+				define('OPENMVC_SYSTEM_PATH', OPENMVC_PATH . 'system/');
+				define('OPENMVC_LIB_PATH', OPENMVC_PATH . 'lib/');
+				define('OPENMVC_CONTROLLERS_PATH', OPENMVC_PATH . 'controllers/');
+				
+				/*** Set App absolute Paths ***/
+				define('VIEWS_PATH', OPENMVC_PATH . 'views/');
+				define('CONFIG_PATH', OPENMVC_PATH . 'config/');
 				
 				/*** Set Logs files paths ***/
+				define('LOGS_PATH', OPENMVC_PATH . 'logs/');
 				define('ERROR_LOG_FILE_PATH', LOGS_PATH . 'errors.log');
 				
 				/*** Set Error Codes ***/
@@ -33,20 +33,20 @@ define('DEV_MODE', 1);
 
 
 	/*** Include Logger Class ***/
-	include_once (SYSTEM_PATH . 'logger.class.php');
+	include_once (OPENMVC_SYSTEM_PATH . 'logger.class.php');
 	/*** Initialize Core Object (that manages all child objects/classes) ***/
-	include_once (SYSTEM_PATH . 'core.class.php');
+	include_once (OPENMVC_SYSTEM_PATH . 'core.class.php');
 	$Core = new Core;
 	
 
 			/*** Each time a new lib class is instantiated/called - include_once it's source file ***/
 			function __autoload($class_name) {
 				
-				/*** All NOT-system classes should be in LIB_PATH and their names should begin with lowercased class name plus ".class.php" ***/
+				/*** All NOT-system classes should be in OPENMVC_LIB_PATH and their names should begin with lowercased class name plus ".class.php" ***/
 			    $filename = strtolower($class_name) . '.class.php';
-			    $file = LIB_PATH . $filename;
+			    $file = OPENMVC_LIB_PATH . $filename;
 			    
-			    /*** Check if file exists in LIB_PATH ***/
+			    /*** Check if file exists in OPENMVC_LIB_PATH ***/
 			    if (!file_exists($file)) {
 					throw new Exception('Can\'t find class ['.$class_name.'] ('.$filename.')', ERRORCODE_TECHNICAL_DIFFICULTIES);
 			    }

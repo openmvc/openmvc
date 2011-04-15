@@ -90,7 +90,7 @@ class Router extends Core {
 	private function setController($controller) {
 	
 		/*** set the file path ***/
-		$this->controllerFilePath = CONTROLLERS_PATH . $controller . '.php';
+		$this->controllerFilePath = OPENMVC_CONTROLLERS_PATH . $controller . '.php';
 
 		/*** if the file is not there diaf ***/
 		if (is_readable($this->controllerFilePath) == false) {

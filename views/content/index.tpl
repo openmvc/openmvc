@@ -1,1 +1,0 @@
-Congratulations! OpenMVC is ready and working.

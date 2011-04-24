@@ -36,12 +36,12 @@ class Router extends Core {
 		 			if(!$this->controllerLoaded && !$this->View->viewLoaded) {
 		 				
 		 					/*** Extract exact URI we are looking for ***/
-		 					$requestURI = str_replace(STATIC_DIR, '', $_GET['url']);
+		 					$this->requestURI = str_replace(STATIC_DIR, '', $_GET['url']);
 		 					
 		 					/*** Avoid 404 error for favicon ***/
-						 	if ($requestURI === 'favicon.ico') { die(); }
+						 	if ($this->requestURI === 'favicon.ico') { die(); }
 						 	
-						 	$this->requestURIChain = explode('/', $requestURI);
+						 	$this->requestURIChain = explode('/', $this->requestURI);
 						 	
 						 	/*** Check if route exists ***/
 						 	$STH = $this->Database->prepare("SELECT `page_ID`, `controller`, `layout`, `content`,
@@ -64,7 +64,7 @@ class Router extends Core {
 						 		
 							/*** If no route found - throw Exception that will be catched in index.php ***/
 						 	} else {
-						 		throw new Exception($requestURI, 404);
+						 		throw new Exception($this->requestURI, 404);
 						 	}
 					
 		 			}

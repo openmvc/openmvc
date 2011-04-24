@@ -23,6 +23,7 @@ define('DEV_MODE', 1);
 				define('CONTROLLERS_PATH', APP_PATH . 'controllers/');
 				define('VIEWS_PATH', APP_PATH . 'views/');
 				define('CONFIG_PATH', APP_PATH . 'config/');
+				define('MODELS_PATH', APP_PATH . 'models/');
 				
 				/*** Set Logs files paths ***/
 				define('LOGS_PATH', APP_PATH . 'logs/');
@@ -49,7 +50,14 @@ define('DEV_MODE', 1);
 			    
 			    /*** Check if file exists in OPENMVC_LIB_PATH ***/
 			    if (!file_exists($file)) {
-					throw new Exception('Can\'t find class ['.$class_name.'] ('.$filename.')', ERRORCODE_TECHNICAL_DIFFICULTIES);
+					
+					/*** Look in MODELS PATH ***/
+					$filename = strtolower($class_name) . '.class.php';
+					$file = MODELS_PATH . $filename;
+					
+					if (!file_exists($file)) {
+						throw new Exception('Can\'t find class ['.$class_name.'] ('.$filename.')', ERRORCODE_TECHNICAL_DIFFICULTIES);
+					}
 			    }
 			    
 			  	include_once ($file);

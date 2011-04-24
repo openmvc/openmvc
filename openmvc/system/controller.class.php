@@ -8,7 +8,7 @@ Abstract class Controller extends Core {
 	
 	public function loadDefaults()
 	{
-		$this->requireCss('main.css');
+
 	}
 	
 	public function requireCss($cssFile)

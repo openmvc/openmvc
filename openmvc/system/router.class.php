@@ -41,14 +41,13 @@ class Router extends Core {
 		 					/*** Avoid 404 error for favicon ***/
 						 	if ($requestURI === 'favicon.ico') { die(); }
 						 	
-						 	//$requestChain = explode('/', $requestURI);
-						 	//print_r($requestChain);exit();
+						 	$this->requestURIChain = explode('/', $requestURI);
 						 	
 						 	/*** Check if route exists ***/
 						 	$STH = $this->Database->prepare("SELECT `page_ID`, `controller`, `layout`, `content`,
 					 												`meta_title`, `meta_keywords`, `meta_description`
 					 										 FROM pages WHERE page_uri = ?");
-							$STH->execute(array($requestURI));
+							$STH->execute(array($this->requestURIChain[0]));
 							$STH->setFetchMode(PDO::FETCH_ASSOC);
 							
 						 	/*** If route found - load Controller and View ***/

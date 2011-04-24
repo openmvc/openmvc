@@ -25,7 +25,7 @@ define('DEV_MODE', 1);
 				define('CONFIG_PATH', APP_PATH . 'config/');
 				
 				/*** Set Logs files paths ***/
-				define('LOGS_PATH', OPENMVC_PATH . 'logs/');
+				define('LOGS_PATH', APP_PATH . 'logs/');
 				define('ERROR_LOG_FILE_PATH', LOGS_PATH . 'errors.log');
 				
 				/*** Set Error Codes ***/

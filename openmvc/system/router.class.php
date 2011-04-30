@@ -46,8 +46,10 @@ class Router extends Core {
 						 	/*** Check if route exists ***/
 						 	$STH = $this->Database->prepare("SELECT `page_ID`, `controller`, `layout`, `content`,
 					 												`meta_title`, `meta_keywords`, `meta_description`
-					 										 FROM pages WHERE page_uri = ?");
-							$STH->execute(array($this->requestURIChain[0]));
+					 										 FROM pages WHERE page_uri = LEFT(?, LENGTH(page_uri))
+															 ORDER BY LENGTH(page_uri) DESC
+															 LIMIT 0,1");
+							$STH->execute(array($this->requestURI));
 							$STH->setFetchMode(PDO::FETCH_ASSOC);
 							
 						 	/*** If route found - load Controller and View ***/
@@ -55,7 +57,7 @@ class Router extends Core {
 						 		
 						 		/*** assign result to $this->pageArr ***/
 						 		$this->pageArr = $STH->fetch();
-						 		
+								
 						 		/*** set View ***/
 							 	$this->View->setView( ($this->pageArr['layout']!=null?$this->pageArr['layout']:$this->Config->system['default_layout']), ($this->pageArr['content']!=null?$this->pageArr['content']:$this->Config->system['default_content']) );
 							 

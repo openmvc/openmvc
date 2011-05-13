@@ -1,7 +1,7 @@
 	<?php
 	
 		if (isset($requiredJs)) {
-			foreach ($requiredJs as $jsFile => $use) {
+			foreach ($requiredJs as $jsFile => $params) {
 				if($params['show']) echo '<script type="text/javascript" language="javascript" charset="utf-8" src="' . WWW_JS_PATH . $jsFile . '"></script>' . "\n";
 			}
 		}

@@ -7,11 +7,12 @@ define('DEV_MODE', 1);
 	
 			####################### SET MAIN DEFINES ##########################
 				/*** Set WWW Paths ***/
-				define('WWW_CSS_PATH', '/css/');
-				define('WWW_JS_PATH', '/js/');
-				define('WWW_IMAGES_PATH', '/images/');
+				define('WWW_PATH', 'http://' . str_replace('openmvc/index.php', '', $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']));
+				define('WWW_CSS_PATH', WWW_PATH . 'css/');
+				define('WWW_JS_PATH', WWW_PATH . 'js/');
+				define('WWW_IMAGES_PATH', WWW_PATH . 'images/');
 				
-				define('STATIC_DIR', 'static_files/');
+				define('STATIC_DIR', dirname(dirname(__FILE__)) . '/static_files/');
 				
 				/*** Set OpenMVC absolute Paths ***/
 				define('OPENMVC_PATH', dirname(__FILE__). '/');
@@ -52,7 +53,7 @@ define('DEV_MODE', 1);
 			    /*** Check if file exists in OPENMVC_LIB_PATH ***/
 			    if (!file_exists($file)) {
 					
-					/*** Look in MODELS PATH ***/
+					/*** Look in MODULES PATH ***/
 					$filename = strtolower($class_name) . '.class.php';
 					$file = MODULES_PATH . $filename;
 					

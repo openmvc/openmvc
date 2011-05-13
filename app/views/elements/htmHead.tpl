@@ -11,6 +11,14 @@
 				if($params['show']) echo '<link rel="stylesheet" href="' . WWW_CSS_PATH . $cssFile . '" type="text/css" media="all" charset="utf-8" />' . "\n";
 			}
 		}
+		
+		if (!@empty($requiredStyle)) {
+			echo '<style type="text/css">';
+			foreach ($requiredStyle as $styleCss) {
+				echo $styleCss;
+			}
+			echo '</style>';
+		}
 	
 	?>
 	

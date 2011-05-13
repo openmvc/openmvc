@@ -54,7 +54,7 @@ define('DEV_MODE', 1);
 					
 					/*** Look in MODELS PATH ***/
 					$filename = strtolower($class_name) . '.class.php';
-					$file = MODELS_PATH . $filename;
+					$file = MODULES_PATH . $filename;
 					
 					if (!file_exists($file)) {
 						throw new Exception('Can\'t find class ['.$class_name.'] ('.$filename.')', ERRORCODE_TECHNICAL_DIFFICULTIES);

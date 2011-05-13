@@ -23,7 +23,8 @@ define('DEV_MODE', 1);
 				define('CONTROLLERS_PATH', APP_PATH . 'controllers/');
 				define('VIEWS_PATH', APP_PATH . 'views/');
 				define('CONFIG_PATH', APP_PATH . 'config/');
-				define('MODELS_PATH', APP_PATH . 'models/');
+				define('MODULES_PATH', APP_PATH . 'modules/');
+				define('ASSETS_PATH', APP_PATH . 'assets/');
 				
 				/*** Set Logs files paths ***/
 				define('LOGS_PATH', APP_PATH . 'logs/');

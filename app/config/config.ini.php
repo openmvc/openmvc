@@ -1,8 +1,8 @@
 [system]
-default_controller = defaultController
+default_controller = default
 default_layout = default
 default_content = index
-error_controller = errorController
+error_controller = error
 error_layout = error
 error_content = error
 timezone = "America/Los_Angeles"

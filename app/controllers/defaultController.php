@@ -4,14 +4,24 @@ Class defaultController Extends Controller {
 
 	public function dispatch() {
 		
-		/*** prepare variables used in template ***/
-    	$this->View->pageTitle = $this->Router->pageArr['meta_title'];
-    	$this->View->heading = 'INDEX';
-    	
-		/*** Load defauls stuff ***/
-		$this->loadDefaults();
-    	/*** Last step -> print HTML from template ***/
-    	$this->View->show();
+		if(    count($this->requestURIChain) == 1
+			&& $this->requestURIChain[0] == '' ) {
+				
+				/*** prepare variables used in template ***/
+		    	$this->View->pageTitle = '';
+		    	$this->View->heading = 'INDEX';
+		    	
+		    	
+		    	/*** Last step -> print HTML from template ***/
+		    	$this->View->setView('default', 'index');
+		    	$this->View->render();
+		    	
+				
+		} else {
+			
+			throw new Exception($this->requestURI, 404);
+			
+		}
     	
     }
 }

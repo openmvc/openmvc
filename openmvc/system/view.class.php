@@ -8,7 +8,7 @@ class View extends Core {
 	 * @access private
 	 */
 	public $vars = array();
-	private $viewContentFilePath;
+	private $viewInnerFilePath;
 	private $viewLayoutFilePath;
 	private $viewLoaded;
 	
@@ -19,9 +19,7 @@ class View extends Core {
 	    return self::$instance;  
 	}
 	
-	function __construct() {
-		
-	}
+	function __construct() {}
 	
 	/**
 	 *
@@ -38,17 +36,17 @@ class View extends Core {
 	    $this->vars[$index] = $value;
 	}
 	
-	public function show() {
+	public function render() {
 	
 		/*** Load variables ***/
 		foreach ($this->vars as $key => $value) {
 			$$key = $value;
 		}
 		
-		/*** Render content page and load it into $viewContent variable for use in Layout ***/
+		/*** Render inner page and load it into $viewInner variable for use in Layout ***/
 		ob_start();
-			include_once ($this->viewContentFilePath);
-			$viewContent = ob_get_contents();
+			include_once ($this->viewInnerFilePath);
+			$viewInner = ob_get_contents();
 		ob_end_clean();
 	
 		/*** Render View Layout ***/
@@ -71,7 +69,7 @@ class View extends Core {
 	 * @return void
 	 *
 	 */
-	public function setView($layout='', $content='') {
+	public function setView($layout='', $inner='') {
 	
 		/*** set the file path ***/
 		$this->viewLayoutFilePath = VIEWS_PATH . 'layouts/' . $layout . '.tpl';
@@ -83,11 +81,11 @@ class View extends Core {
 		
 		
 		/*** set the file path ***/
-		$this->viewContentFilePath = VIEWS_PATH . 'content/' . $content . '.tpl';
+		$this->viewInnerFilePath = VIEWS_PATH . 'inners/' . $inner . '.tpl';
 		
 		/*** check if file exists ***/
-		if (is_readable($this->viewContentFilePath) == false) {
-			throw new Exception ('Invalid view content file: `' . $this->viewContentFilePath . '`');
+		if (is_readable($this->viewInnerFilePath) == false) {
+			throw new Exception ('Invalid view inner file: `' . $this->viewInnerFilePath . '`');
 		}
 		
 		/*** update view Flag ***/
@@ -104,11 +102,11 @@ class View extends Core {
 	 * @return void
 	 *
 	 */
-	private function includeElements($elements) {
+	private function includeBlocks($blocks) {
 		
 		/*** throw an exception if incorrect parameter was passed ***/
-		if(empty($elements) || !is_array($elements)) {
-			throw new Exception('Wrong parameter type passed to includeElements() function', ERRORCODE_TECHNICAL_DIFFICULTIES);
+		if(empty($blocks) || !is_array($blocks)) {
+			throw new Exception('Wrong parameter type passed to includeBlocks() function', ERRORCODE_TECHNICAL_DIFFICULTIES);
 		}
 		
 		/*** Load variables for included elements to access them - am not happy about such workaround, should be fixed later ***/
@@ -116,13 +114,13 @@ class View extends Core {
 			$$key = $value;
 		}
 		
-		foreach($elements as $element) {
-			$elementFilePath = VIEWS_PATH . 'elements/' . $element . '.tpl';
-			if(!file_exists($elementFilePath)) {
-				throw new Exception('Can\'t find view element ['.$elementFilePath.']', ERRORCODE_TECHNICAL_DIFFICULTIES);
+		foreach($blocks as $block) {
+			$blockFilePath = VIEWS_PATH . 'blocks/' . $block . '.tpl';
+			if(!file_exists($blockFilePath)) {
+				throw new Exception('Can\'t find view block ['.$blockFilePath.']', ERRORCODE_TECHNICAL_DIFFICULTIES);
 			}
 			
-			include_once ($elementFilePath);
+			include_once ($blockFilePath);
 		}
 		
 		

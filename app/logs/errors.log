@@ -1,4 +1,1 @@
-[2011-10-06 11:57:01] Code: 1045 
- Message: SQLSTATE[28000] [1045] Access denied for user 'test'@'localhost' (using password: YES)
- File: /var/www/html/openmvc.somedestination.com/openmvc/lib/database.class.php
- Line: 39
+

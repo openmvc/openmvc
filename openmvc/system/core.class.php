@@ -111,10 +111,10 @@ class Core {
      * @param string $class_name 
      * @param string $object_alias
      */ 
-    private static function loadObject($class_name) {
+    private static function loadObject($class_name, $obtain = false) {
     	/*** exception for Database - Database is the only object that should be created statically as it is wrapper ***/
-    	if($class_name=='Database') {
-    		Core::$_objects[$class_name] = Database::obtain();
+    	if($obtain === true) {
+    		Core::$_objects[$class_name] = $class_name::obtain();
     	} else {
 	        $file_name = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $class_name));
 	        Core::$_objects[$class_name] = new $class_name();

@@ -43,30 +43,11 @@ class Router extends Core {
 						 	
 						 	$this->requestURIChain = explode('/', $this->requestURI);
 						 	
-						 	/*** Check if route exists ***/
-						 	$STH = $this->Database->prepare("SELECT `page_ID`, `controller`, `layout`, `content`,
-					 												`meta_title`, `meta_keywords`, `meta_description`
-					 										 FROM pages WHERE page_uri = LEFT(?, LENGTH(page_uri))
-															 ORDER BY LENGTH(page_uri) DESC
-															 LIMIT 0,1");
-							$STH->execute(array($this->requestURI));
-							$STH->setFetchMode(PDO::FETCH_ASSOC);
-							
-						 	/*** If route found - load Controller and View ***/
-						 	if($STH->rowCount()>0) {
+						 	/*** If couldn't find controller AND could not load default controller - return 404 ***/
+						 	if(    !$this->setController($this->requestURIChain[0])
+						 		&& !$this->setController($this->Config->system['default_controller']) ) {
 						 		
-						 		/*** assign result to $this->pageArr ***/
-						 		$this->pageArr = $STH->fetch();
-								
-						 		/*** set View ***/
-							 	$this->View->setView( ($this->pageArr['layout']!=null?$this->pageArr['layout']:$this->Config->system['default_layout']), ($this->pageArr['content']!=null?$this->pageArr['content']:$this->Config->system['default_content']) );
-							 
-								/*** set Controller ***/
-								$this->setController( ($this->pageArr['controller']!=null?$this->pageArr['controller']:$this->Config->system['default_controller']) );
-						 		
-							/*** If no route found - throw Exception that will be catched in index.php ***/
-						 	} else {
-						 		throw new Exception($this->requestURI, 404);
+						 			throw new Exception ('Could not load default controller: `' . $this->Config->system['default_controller'] . '`', ERRORCODE_TECHNICAL_DIFFICULTIES);
 						 	}
 					
 		 			}
@@ -90,12 +71,14 @@ class Router extends Core {
 	 */
 	private function setController($controller) {
 	
+		$controller .= 'Controller';
+		
 		/*** set the file path ***/
 		$this->controllerFilePath = CONTROLLERS_PATH . $controller . '.php';
 
 		/*** if the file is not there diaf ***/
 		if (is_readable($this->controllerFilePath) == false) {
-			throw new Exception ('Invalid controller file: `' . $this->controllerFilePath . '`', ERRORCODE_TECHNICAL_DIFFICULTIES);
+			return false;
 		}
 		
 		/*** update controller ***/
@@ -103,6 +86,8 @@ class Router extends Core {
 		
 		/*** update controller Flag ***/
 		$this->controllerLoaded = true;
+		
+		return true;
 	}
 	
 	

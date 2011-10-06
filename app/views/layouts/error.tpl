@@ -1,12 +1,5 @@
-<?php $this->includeElements(array('htmHead')) ?>
+<?php $this->includeBlocks(array('htmHead')) ?>
 
-	<div id="container">
-
-		
-		<!--content -->
-			<?php echo $viewContent; ?>
-		<!--END content-->
-		
-	</div>
+<div id="container"><?php echo $viewInner; ?></div>
 	
-<?php $this->includeElements(array('htmFooter')) ?>
+<?php $this->includeBlocks(array('htmFooter')) ?>

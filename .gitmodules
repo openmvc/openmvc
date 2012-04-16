@@ -1,0 +1,3 @@
+[submodule "openmvc/core"]
+	path = openmvc/core
+	url = git@github.com:openmvc/core.git

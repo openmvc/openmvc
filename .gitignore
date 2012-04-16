@@ -1,5 +1,5 @@
-#ignore all log files
-openmvc/logs/*
-
 #fix for empty directories - empty .gitignore files
 !.gitignore
+
+#ignore all log files
+#*.log
